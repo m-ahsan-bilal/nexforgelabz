@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, Space_Mono, DM_Sans } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import { CTAModalProvider } from "@/context/CTAModalContext";
 import CTAModal from "@/components/lead/CTAModal";
