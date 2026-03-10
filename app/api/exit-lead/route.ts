@@ -70,15 +70,16 @@ export async function POST(req: NextRequest) {
         if (resendKey) {
             const subject = `🚪 Exit Lead — ${idea.slice(0, 55)}${idea.length > 55 ? "..." : ""}`;
 
-            await fetch("https://api.resend.com/emails", {
+            const res = await fetch("https://api.resend.com/emails", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${resendKey}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    from: "NexForge Labz <leads@nexforgelabz.com>",
+                    from: "NexForge Labz <onboarding@resend.dev>",
                     to: "nexforge.labz@gmail.com",
+                    reply_to: email,
                     subject,
                     html: `
             <div style="font-family: sans-serif; max-width: 600px;">
@@ -105,6 +106,13 @@ export async function POST(req: NextRequest) {
           `,
                 }),
             });
+
+            if (!res.ok) {
+                const errBody = await res.text();
+                console.error("[Resend] Exit lead email failed:", res.status, errBody);
+            } else {
+                console.log(`[Resend] Exit lead email sent — from ${email}`);
+            }
         } else {
             /* No Resend key: log to console for development */
             console.log("────────────────────────────────────");

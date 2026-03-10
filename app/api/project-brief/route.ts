@@ -13,7 +13,7 @@ const schema = z.object({
     name: z.string().min(2).max(80),
     email: z.string().email(),
     idea: z.string().min(30).max(1000),
-    budget: z.enum(["5k-10k", "10k-20k", "20k-40k", "40k-80k", "80k+", "unsure"]),
+    budget: z.enum(["2k-5k", "5k-10k", "10k-20k", "20k+", "unsure"]),
     source: z.string().optional(),
     timestamp: z.string().optional(),
 });
@@ -39,11 +39,10 @@ function checkRateLimit(ip: string): boolean {
 /* ── Budget label map ─────────────────────────────── */
 
 const budgetLabels: Record<string, string> = {
+    "2k-5k": "$2k–$5k",
     "5k-10k": "$5k–$10k",
     "10k-20k": "$10k–$20k",
-    "20k-40k": "$20k–$40k",
-    "40k-80k": "$40k–$80k",
-    "80k+": "$80k+",
+    "20k+": "$20k+",
     unsure: "Not sure yet",
 };
 
@@ -84,14 +83,14 @@ export async function POST(req: NextRequest) {
             // EMAIL A — Internal notification
             const subjectA = `🚀 Project Brief — ${budgetLabel} — ${name} — ${idea.slice(0, 50)}${idea.length > 50 ? "..." : ""}`;
 
-            await fetch("https://api.resend.com/emails", {
+            const resA = await fetch("https://api.resend.com/emails", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${resendKey}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    from: "NexForge Labz <leads@nexforgelabz.com>",
+                    from: "NexForge Labz <onboarding@resend.dev>",
                     to: "nexforge.labz@gmail.com",
                     subject: subjectA,
                     html: `
@@ -126,16 +125,24 @@ export async function POST(req: NextRequest) {
                 }),
             });
 
+            if (!resA.ok) {
+                const errBody = await resA.text();
+                console.error("[Resend] Brief notification email failed:", resA.status, errBody);
+            } else {
+                console.log("[Resend] Brief notification email sent to nexforge.labz@gmail.com");
+            }
+
             // EMAIL B — Founder confirmation
-            await fetch("https://api.resend.com/emails", {
+            const resB = await fetch("https://api.resend.com/emails", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${resendKey}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    from: "NexForge Labz <hello@nexforgelabz.com>",
+                    from: "NexForge Labz <onboarding@resend.dev>",
                     to: email,
+                    reply_to: "nexforge.labz@gmail.com",
                     subject: `Got your brief, ${name} 👋`,
                     text: `Hey ${name},
 
@@ -153,6 +160,13 @@ The NexForge team
 P.S. Check spam if you don't hear from us — sometimes emails hide.`,
                 }),
             });
+
+            if (!resB.ok) {
+                const errBody = await resB.text();
+                console.error("[Resend] Confirmation email failed:", resB.status, errBody);
+            } else {
+                console.log(`[Resend] Confirmation email sent to ${email}`);
+            }
         } else {
             /* No Resend key: log to console */
             console.log("────────────────────────────────────");
