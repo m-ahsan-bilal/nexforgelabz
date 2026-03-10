@@ -132,41 +132,10 @@ export async function POST(req: NextRequest) {
                 console.log("[Resend] Brief notification email sent to nexforge.labz@gmail.com");
             }
 
-            // EMAIL B — Founder confirmation
-            const resB = await fetch("https://api.resend.com/emails", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${resendKey}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    from: "NexForge Labz <onboarding@resend.dev>",
-                    to: email,
-                    reply_to: "nexforge.labz@gmail.com",
-                    subject: `Got your brief, ${name} 👋`,
-                    text: `Hey ${name},
-
-Got your brief — thanks for sharing what you're building.
-
-We'll review it carefully and send you a personalized scope estimate within 24 hours: tech stack recommendation, rough timeline, and ballpark cost range.
-
-If anything's urgent, just reply to this email directly.
-
-Even if your idea turns out to be a better fit for a different approach or tool, we'll tell you that honestly. That's the only kind of advice we give.
-
-Talk soon,
-The NexForge team
-
-P.S. Check spam if you don't hear from us — sometimes emails hide.`,
-                }),
-            });
-
-            if (!resB.ok) {
-                const errBody = await resB.text();
-                console.error("[Resend] Confirmation email failed:", resB.status, errBody);
-            } else {
-                console.log(`[Resend] Confirmation email sent to ${email}`);
-            }
+            // EMAIL B (client confirmation) — disabled until nexforgelabz.com
+            // is verified in Resend dashboard. Resend free plan only allows
+            // sending to your own email without a verified domain.
+            // TODO: verify domain at resend.com/domains then re-enable this.
         } else {
             /* No Resend key: log to console */
             console.log("────────────────────────────────────");
