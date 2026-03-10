@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { appendToSheet } from "@/lib/sheets";
 
 /* ═══════════════════════════════════════════════════
    EXIT LEAD API — /api/exit-lead
@@ -123,6 +124,18 @@ export async function POST(req: NextRequest) {
             console.log(`   Time: ${timestamp}`);
             console.log("────────────────────────────────────");
         }
+
+        /* ── Log to Google Sheets ───────────────────── */
+        await appendToSheet([
+            new Date().toISOString(),
+            "quick_message",
+            "",           // name (not collected in this form)
+            email,
+            "",           // budget (not collected in this form)
+            idea,
+            trigger || "",
+            ip,
+        ]);
 
         return NextResponse.json({ success: true });
     } catch (error) {

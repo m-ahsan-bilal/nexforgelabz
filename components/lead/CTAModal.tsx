@@ -25,7 +25,7 @@ function trackEvent(name: string, params?: Record<string, unknown>) {
 const WA_URL =
   "https://wa.me/923704125147?text=" +
   encodeURIComponent(
-    "Hi NexForge 👋 I want to discuss my project idea. I found you on your website."
+    "Hi NexForge  I want to discuss my project idea. I found you on your website."
   );
 
 /* ── Quick message schema ─────────────────────────── */

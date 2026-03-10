@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { appendToSheet } from "@/lib/sheets";
 
 /* ═══════════════════════════════════════════════════
    PROJECT BRIEF API — /api/project-brief
@@ -160,6 +161,18 @@ export async function POST(req: NextRequest) {
                 }),
             }).catch(() => { });
         }
+
+        /* ── Log to Google Sheets ───────────────────── */
+        await appendToSheet([
+            new Date().toISOString(),
+            "project_brief",
+            name,
+            email,
+            budgetLabel,
+            idea,
+            source || "",
+            ip,
+        ]);
 
         return NextResponse.json({ success: true });
     } catch (error) {
