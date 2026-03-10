@@ -42,61 +42,108 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nexforgelabz.com"),
+
+  /* ── Core ─────────────────────────────────────────── */
   title: {
-    default: "NexForge Labz | Ship Your MVP in 6 Weeks | Mobile, Web & AI Apps",
+    default: "NexForge Labz | MVP Development Agency | Mobile, Web & AI Apps",
     template: "%s | NexForge Labz",
   },
   description:
-    "Production-grade mobile, web, and AI apps for founders. MVP development in 6 weeks. Clean code, clear communication, zero technical debt. Starting at $8,000.",
+    "NexForge Labz builds production-grade mobile, web, and AI apps for startups and founders. Ship your MVP in 6 weeks — fixed price, full code ownership, zero technical debt. Starting at $2,000.",
+
+  /* ── Keywords ─────────────────────────────────────── */
   keywords: [
-    "MVP development",
+    // Buyer-intent
+    "hire app developer",
+    "MVP development agency",
     "startup app development",
-    "mobile app agency",
-    "Next.js development",
-    "Flutter development",
+    "app development for startups",
+    "build my app",
+    "MVP development cost",
+    "how to build an MVP",
+    // Service-specific
+    "mobile app development agency",
+    "web app development agency",
     "AI app development",
-    "6 week MVP",
-    "software development agency",
+    "Next.js development agency",
+    "Flutter app development",
+    "React Native development",
+    "SaaS development agency",
+    // Pain-point
+    "fast MVP development",
+    "affordable app development",
+    "no technical debt",
+    "fixed price app development",
+    "offshore app development agency",
+    // Brand
+    "NexForge Labz",
+    "NexForge",
   ],
+
+  /* ── Authorship ───────────────────────────────────── */
   authors: [{ name: "NexForge Labz", url: "https://nexforgelabz.com" }],
   creator: "NexForge Labz",
+  publisher: "NexForge Labz",
+
+  /* ── Canonical & alternates ───────────────────────── */
+  alternates: {
+    canonical: "https://nexforgelabz.com",
+  },
+
+  /* ── Open Graph ───────────────────────────────────── */
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://nexforgelabz.com",
     title: "NexForge Labz | Ship Your MVP in 6 Weeks",
     description:
-      "Production-grade apps for founders who can't afford delays. 10+ MVPs shipped. Starting at $8,000.",
+      "Production-grade mobile, web & AI apps for founders. 10+ MVPs shipped. Fixed price. Full code ownership. Starting at $2,000.",
     siteName: "NexForge Labz",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "NexForge Labz — Ship Your MVP in 6 Weeks",
+        type: "image/png",
       },
     ],
   },
+
+  /* ── Twitter / X ──────────────────────────────────── */
   twitter: {
     card: "summary_large_image",
     title: "NexForge Labz | Ship Your MVP in 6 Weeks",
     description:
-      "Production-grade apps for founders who can't afford delays.",
-    images: ["/og-image.png"],
+      "Production-grade mobile, web & AI apps for founders. Fixed price, full code ownership, zero technical debt.",
+    images: ["/opengraph-image"],
+    creator: "@nexforgelabz",
   },
+
+  /* ── Robots ───────────────────────────────────────── */
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
+
+  /* ── Google verification ──────────────────────────── */
   verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE",
+    google: "Azq1kjSQpKsLipnykae9dB8o_LnkeLHsxZ8dvpuF3Jk",
   },
+
+  /* ── App metadata ─────────────────────────────────── */
+  applicationName: "NexForge Labz",
+  referrer: "origin-when-cross-origin",
+  category: "technology",
 };
 
 /* ═══════════════════════════════════════════════════
